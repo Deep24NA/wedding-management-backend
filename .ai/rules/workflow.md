@@ -9,11 +9,12 @@ This document defines the standard operating lifecycle, pre-execution planning p
 Every task executed by an AI agent MUST follow this 10-step sequential workflow:
 
 ```
-1. Inspect ➔ 2. Read Context ➔ 3. Plan ➔ 4. Seek Approval ➔ 5. Execute ➔ 
+1. Inspect ➔ 2. Read Context ➔ 3. Plan ➔ 4. Seek Approval ➔ 5. Execute ➔
 6. Verify ➔ 7. Diff Review ➔ 8. Self-Check ➔ 9. Update Context ➔ 10. Audit Report
 ```
 
 ### Step Breakdown:
+
 1. **Inspect**: Read target files, repository structure, and relevant module implementations.
 2. **Read Context**: Inspect `AI_CONTEXT.md` and load applicable `.ai/rules/` files.
 3. **Plan**: Formulate a clear, written execution plan before performing any write operations.
@@ -30,13 +31,14 @@ Every task executed by an AI agent MUST follow this 10-step sequential workflow:
 ## 2. Pre-Execution Planning Protocol
 
 Before performing write operations, the agent MUST present a plan detailing:
-* **Objective**: Clear statement of the goal.
-* **Target Files**: Specific files to modify, create, or delete.
-* **Proposed Changes**: Concise breakdown of code edits.
-* **Tools & Commands**: Commands to be executed.
-* **Dependencies**: Any required libraries (and justification).
-* **Risks & Impact**: Potential side effects on architecture or API contracts.
-* **Verification Method**: Specific test or compilation commands for verification.
+
+- **Objective**: Clear statement of the goal.
+- **Target Files**: Specific files to modify, create, or delete.
+- **Proposed Changes**: Concise breakdown of code edits.
+- **Tools & Commands**: Commands to be executed.
+- **Dependencies**: Any required libraries (and justification).
+- **Risks & Impact**: Potential side effects on architecture or API contracts.
+- **Verification Method**: Specific test or compilation commands for verification.
 
 ---
 
@@ -51,26 +53,27 @@ Before performing write operations, the agent MUST present a plan detailing:
 ## 4. Scope Control & Ambiguity Management
 
 1. **Scope Control**:
-   * Modify ONLY files relevant to the approved task.
-   * Do NOT silently fix unrelated issues.
-   * If an unrelated bug or formatting issue is discovered: **Report it to the developer** without modifying it.
+   - Modify ONLY files relevant to the approved task.
+   - Do NOT silently fix unrelated issues.
+   - If an unrelated bug or formatting issue is discovered: **Report it to the developer** without modifying it.
 2. **Ambiguity Resolution Protocol**:
-   * Do NOT guess when ambiguity affects: database structure, architecture, API contracts, security, authentication, business logic, data integrity, or UI/UX interaction flows.
-   * When high-impact ambiguity occurs:
+   - Do NOT guess when ambiguity affects: database structure, architecture, API contracts, security, authentication, business logic, data integrity, or UI/UX interaction flows.
+   - When high-impact ambiguity occurs:
      1. Identify the ambiguity clearly.
      2. Explain the possible technical interpretations.
      3. Explain the consequences of each option.
      4. Ask the developer to decide.
-   * For low-impact implementation details, adopt the least surprising existing codebase convention and explicitly state the assumption.
+   - For low-impact implementation details, adopt the least surprising existing codebase convention and explicitly state the assumption.
 
 ---
 
 ## 5. Circuit Breaker Mechanism
 
 To prevent infinite loops and repeated failed retries:
+
 1. **Retry Limit**: If the exact same strategy, code edit, or command fails **3 consecutive times**:
-   * **STOP execution immediately**.
-   * Do NOT attempt a 4th automated attempt.
+   - **STOP execution immediately**.
+   - Do NOT attempt a 4th automated attempt.
 2. **Escalation Report**: Report what was attempted, the exact error encountered, previous attempts, likely root cause, and the specific developer input or decision required to unblock progress.
 
 ---
@@ -78,14 +81,15 @@ To prevent infinite loops and repeated failed retries:
 ## 6. Human-in-the-Loop Triggers
 
 Agents MUST require developer involvement when:
-* Agent confidence is insufficient.
-* Requirements are ambiguous or incomplete.
-* Action is irreversible or high-risk.
-* Data integrity or security is affected.
-* Architecture, API contracts, or UI/UX flows are changing.
-* Git history or remotes are affected.
-* Database state or schema is changing.
-* Dependencies are being added, removed, or updated.
+
+- Agent confidence is insufficient.
+- Requirements are ambiguous or incomplete.
+- Action is irreversible or high-risk.
+- Data integrity or security is affected.
+- Architecture, API contracts, or UI/UX flows are changing.
+- Git history or remotes are affected.
+- Database state or schema is changing.
+- Dependencies are being added, removed, or updated.
 
 ---
 
@@ -93,17 +97,18 @@ Agents MUST require developer involvement when:
 
 1. **Verification Requirement**: Never declare a task "Completed" or code "Working" without empirical runtime verification (`pnpm type-check`, `pnpm build`, tests).
 2. **Standardized Task States**:
-   * **Verified**: Implemented and empirically verified via compiler/tests.
-   * **Partially Verified**: Implemented; partial checks succeeded, remaining require developer environment.
-   * **Implemented**: Code written, but automated build/test verification could not be run.
-   * **Not Verified**: Code written, verification pending.
-   * **Blocked**: Execution halted due to circuit breaker, missing permission, or ambiguity.
+   - **Verified**: Implemented and empirically verified via compiler/tests.
+   - **Partially Verified**: Implemented; partial checks succeeded, remaining require developer environment.
+   - **Implemented**: Code written, but automated build/test verification could not be run.
+   - **Not Verified**: Code written, verification pending.
+   - **Blocked**: Execution halted due to circuit breaker, missing permission, or ambiguity.
 
 ---
 
 ## 8. Mandatory 10-Point Self-Check Protocol
 
 Before declaring any task complete, the AI agent MUST verify:
+
 1. Did I follow the approved task scope?
 2. Did I modify only necessary files?
 3. Did I preserve existing architecture and folder structure?
@@ -121,10 +126,10 @@ Before declaring any task complete, the AI agent MUST verify:
 
 Agents must provide concise, auditable summaries without exposing private chain-of-thought:
 
-* **Format**:
+- **Format**:
   `Action: <Brief title of operation>`
   `Reason: <Clear justification grounded in task objective>`
 
-* **Example (Sensitive Action Request)**:
+- **Example (Sensitive Action Request)**:
   `Action: Request permission to execute pnpm prisma generate`
   `Reason: Generate updated Prisma client types required for approved user service implementation.`

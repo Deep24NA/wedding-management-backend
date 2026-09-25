@@ -5,4 +5,3 @@ export interface ApiResponse<T = unknown> {
   errors?: unknown;
   stack?: string;
 }
-

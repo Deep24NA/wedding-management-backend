@@ -9,7 +9,7 @@ export class AppError extends Error {
     message: string,
     statusCode: HttpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR,
     errors?: unknown,
-    isOperational = true
+    isOperational = true,
   ) {
     super(message);
     this.statusCode = statusCode;
@@ -20,4 +20,3 @@ export class AppError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
-

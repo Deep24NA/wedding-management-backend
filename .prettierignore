@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Build & Coverage
+dist/
+coverage/
+
+# Generated files
+generated/
+
+# Environments
+.env
+.env.*

@@ -39,4 +39,3 @@ export function parseTrustProxy(trustProxySetting: string): boolean | number | s
   }
   return trustProxySetting.trim();
 }
-

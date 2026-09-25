@@ -6,7 +6,7 @@ import { AppError } from '../utils/errors.js';
 
 /**
  * Helmet configuration tailored for a JSON REST API backend.
- * 
+ *
  * Note on Content Security Policy (CSP):
  * This service is exclusively a headless REST API providing JSON responses rather
  * than serving browser-rendered HTML documents. Therefore, browser CSP script/style
@@ -21,13 +21,14 @@ export const helmetConfig = helmet({
   dnsPrefetchControl: { allow: false },
   frameguard: { action: 'deny' },
   hidePoweredBy: true,
-  hsts: env.NODE_ENV === 'production'
-    ? {
-        maxAge: 31536000, // 1 year
-        includeSubDomains: true,
-        preload: true,
-      }
-    : false,
+  hsts:
+    env.NODE_ENV === 'production'
+      ? {
+          maxAge: 31536000, // 1 year
+          includeSubDomains: true,
+          preload: true,
+        }
+      : false,
   ieNoOpen: true,
   noSniff: true,
   originAgentCluster: true,
@@ -56,7 +57,7 @@ export const getCorsOptions = (): CorsOptions => {
       }
 
       return callback(
-        new AppError(`Origin '${origin}' is not allowed by CORS policy.`, HttpStatus.FORBIDDEN)
+        new AppError(`Origin '${origin}' is not allowed by CORS policy.`, HttpStatus.FORBIDDEN),
       );
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
@@ -66,4 +67,3 @@ export const getCorsOptions = (): CorsOptions => {
     optionsSuccessStatus: HttpStatus.NO_CONTENT,
   };
 };
-

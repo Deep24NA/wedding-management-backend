@@ -94,7 +94,7 @@ describe('Express Security Integration Tests', () => {
         },
         (res) => {
           resolve(res.statusCode || 0);
-        }
+        },
       );
       req.on('error', reject);
       req.end();

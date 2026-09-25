@@ -13,7 +13,7 @@ export const errorHandler: ErrorRequestHandler = (
   err: unknown,
   _req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void => {
   if (res.headersSent) {
     return next(err);
@@ -35,8 +35,14 @@ export const errorHandler: ErrorRequestHandler = (
   }
   // 2. Handle request body payload limits exceeded
   else if (
-    (typeof err === 'object' && err !== null && 'type' in err && (err as { type: string }).type === 'entity.too.large') ||
-    (typeof err === 'object' && err !== null && 'status' in err && (err as { status: number }).status === 413)
+    (typeof err === 'object' &&
+      err !== null &&
+      'type' in err &&
+      (err as { type: string }).type === 'entity.too.large') ||
+    (typeof err === 'object' &&
+      err !== null &&
+      'status' in err &&
+      (err as { status: number }).status === 413)
   ) {
     statusCode = HttpStatus.PAYLOAD_TOO_LARGE;
     message = `Payload too large. Maximum allowed size is ${env.BODY_SIZE_LIMIT}`;
@@ -86,4 +92,3 @@ export const errorHandler: ErrorRequestHandler = (
 
   res.status(statusCode).json(responsePayload);
 };
-

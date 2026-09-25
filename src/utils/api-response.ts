@@ -6,7 +6,7 @@ export function sendSuccess<T>(
   res: Response,
   data?: T,
   message = 'Operation completed successfully',
-  statusCode: HttpStatusCode = HttpStatus.OK
+  statusCode: HttpStatusCode = HttpStatus.OK,
 ): Response {
   const responsePayload: ApiResponse<T> = {
     success: true,
@@ -20,7 +20,7 @@ export function sendError(
   res: Response,
   message = 'An error occurred',
   statusCode: HttpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR,
-  errors?: unknown
+  errors?: unknown,
 ): Response {
   const responsePayload: ApiResponse = {
     success: false,
@@ -29,4 +29,3 @@ export function sendError(
   };
   return res.status(statusCode).json(responsePayload);
 }
-

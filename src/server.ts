@@ -1,14 +1,8 @@
-import app from "./app";
 import http from 'node:http';
 import app from './app.js';
 import { env } from './config/env.js';
 
-const PORT = 3000;
 const server = http.createServer(app);
-
-app.listen(PORT , () => {
-    console.log(`Server is running in ${PORT}`)
-})
 /**
  * Production HTTP Server Timeouts Configuration
  *

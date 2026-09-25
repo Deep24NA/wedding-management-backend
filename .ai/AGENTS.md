@@ -47,10 +47,10 @@ Upon initialization and before performing any analysis, planning, or code modifi
 
 ## 3. Context Lifecycle & Decision Records (`AI_CONTEXT.md` & `docs/decisions/`)
 
-* **Mandatory Inspection**: Agents MUST inspect `AI_CONTEXT.md` before initiating any project task to understand the current milestone state, confirmed decisions, and open items.
-* **Decision Records Directory**: Formal Architecture Decision Records (ADRs) confirmed by the developer must be stored in [`docs/decisions/`](file:///d:/coding/projects/wedding_management_backend/docs/decisions) (e.g. `docs/decisions/0001-database-provider.md`) and linked within `AI_CONTEXT.md`.
-* **Source of Truth**: `AI_CONTEXT.md` represents active project state. Agents must **never** record unverified assumptions as finalized project decisions (open items must remain `Unknown` / `Not yet decided`).
-* **Context Updates**: Update `AI_CONTEXT.md` and `docs/decisions/` only when a task completes a milestone, alters architecture, or records a developer-confirmed decision. Do not log temporary debug traces or conversation transcripts.
+- **Mandatory Inspection**: Agents MUST inspect `AI_CONTEXT.md` before initiating any project task to understand the current milestone state, confirmed decisions, and open items.
+- **Decision Records Directory**: Formal Architecture Decision Records (ADRs) confirmed by the developer must be stored in [`docs/decisions/`](file:///d:/coding/projects/wedding_management_backend/docs/decisions) (e.g. `docs/decisions/0001-database-provider.md`) and linked within `AI_CONTEXT.md`.
+- **Source of Truth**: `AI_CONTEXT.md` represents active project state. Agents must **never** record unverified assumptions as finalized project decisions (open items must remain `Unknown` / `Not yet decided`).
+- **Context Updates**: Update `AI_CONTEXT.md` and `docs/decisions/` only when a task completes a milestone, alters architecture, or records a developer-confirmed decision. Do not log temporary debug traces or conversation transcripts.
 
 ---
 
@@ -58,20 +58,21 @@ Upon initialization and before performing any analysis, planning, or code modifi
 
 Actions fall into four permission classifications:
 
-* **READ** (Normally Allowed): Inspecting source files, config, Git status/diff/log, Prisma schema, tests, docs. Must never expose private secrets or live credentials.
-* **NORMAL WRITE** (Task Scope): Modifying approved source code, creating required feature files, updating tests or documentation within approved task boundaries.
-* **SENSITIVE WRITE** (Developer Approval Required): Architecture changes, dependency modifications, auth/security logic, Prisma schema modifications, or environment setup changes.
-* **HIGH-RISK / DESTRUCTIVE** (Explicit Confirmation Immediately Before Execution): File deletion, database resets/drops, destructive Git operations, history rewriting, or force operations.
+- **READ** (Normally Allowed): Inspecting source files, config, Git status/diff/log, Prisma schema, tests, docs. Must never expose private secrets or live credentials.
+- **NORMAL WRITE** (Task Scope): Modifying approved source code, creating required feature files, updating tests or documentation within approved task boundaries.
+- **SENSITIVE WRITE** (Developer Approval Required): Architecture changes, dependency modifications, auth/security logic, Prisma schema modifications, or environment setup changes.
+- **HIGH-RISK / DESTRUCTIVE** (Explicit Confirmation Immediately Before Execution): File deletion, database resets/drops, destructive Git operations, history rewriting, or force operations.
 
 ### Core Restricted Commands:
+
 1. **Database & Prisma Safety (Every-Execution Approval Required)**:
-   * **Rule**: Permission is required separately for EVERY single Prisma or database execution. Approval for one command (e.g. `pnpm prisma generate`) DOES NOT grant approval for another (e.g. `pnpm prisma migrate dev`).
-   * **Effect-Based Coverage**: Applies to any CLI command, script, API, or program that creates, alters, deletes, resets, seeds, or syncs database state (e.g., `pnpm prisma ...`, `node scripts/db-setup.js`, SQL queries).
+   - **Rule**: Permission is required separately for EVERY single Prisma or database execution. Approval for one command (e.g. `pnpm prisma generate`) DOES NOT grant approval for another (e.g. `pnpm prisma migrate dev`).
+   - **Effect-Based Coverage**: Applies to any CLI command, script, API, or program that creates, alters, deletes, resets, seeds, or syncs database state (e.g., `pnpm prisma ...`, `node scripts/db-setup.js`, SQL queries).
 2. **Git Safety (Developer Controlled)**:
-   * **Rule**: AI must NOT perform repository-history or remote-changing operations without explicit developer permission.
-   * **Effect-Based Coverage**: Applies to direct Git commands (`git push`, `git pull`, `git fetch`, `git merge`, `git rebase`, `git reset`, `git revert`, `git cherry-pick`, `git clean`, `git branch -D`, `--force`, `--hard`) and any script/tool that executes them.
+   - **Rule**: AI must NOT perform repository-history or remote-changing operations without explicit developer permission.
+   - **Effect-Based Coverage**: Applies to direct Git commands (`git push`, `git pull`, `git fetch`, `git merge`, `git rebase`, `git reset`, `git revert`, `git cherry-pick`, `git clean`, `git branch -D`, `--force`, `--hard`) and any script/tool that executes them.
 3. **Dependency Discipline**:
-   * **Rule**: Express approval required before installing, removing, upgrading, downgrading, or replacing dependencies (`pnpm add`, `pnpm remove`, `pnpm update`, `pnpm install`).
+   - **Rule**: Express approval required before installing, removing, upgrading, downgrading, or replacing dependencies (`pnpm add`, `pnpm remove`, `pnpm update`, `pnpm install`).
 
 ---
 
@@ -79,14 +80,14 @@ Actions fall into four permission classifications:
 
 When a task requires specific domain expertise, the Lead Agent delegates work strictly within the boundaries of specialized agent contracts under `.ai/agents/`:
 
-* [`lead.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/lead.md) — Task breakdown, rule enforcement, delegation, cross-domain coordination.
-* [`backend.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/backend.md) — Express routes, controllers, services, middleware, and business logic.
-* [`database.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/database.md) — Data modeling, Prisma schema design, query optimization advice (READ/PLAN only unless permitted).
-* [`architecture.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/architecture.md) — Structural review, module boundaries, layered architecture enforcement.
-* [`security.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/security.md) — Auth mechanisms, input validation audit, secret protection, prompt injection defense.
-* [`testing.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/testing.md) — Unit tests, integration tests, test fixture creation, test execution.
-* [`swagger.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/swagger.md) — OpenAPI / Swagger documentation maintenance.
-* [`reviewer.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/reviewer.md) — Post-implementation diff review, rule compliance audit, 10-point self-check verification.
+- [`lead.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/lead.md) — Task breakdown, rule enforcement, delegation, cross-domain coordination.
+- [`backend.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/backend.md) — Express routes, controllers, services, middleware, and business logic.
+- [`database.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/database.md) — Data modeling, Prisma schema design, query optimization advice (READ/PLAN only unless permitted).
+- [`architecture.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/architecture.md) — Structural review, module boundaries, layered architecture enforcement.
+- [`security.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/security.md) — Auth mechanisms, input validation audit, secret protection, prompt injection defense.
+- [`testing.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/testing.md) — Unit tests, integration tests, test fixture creation, test execution.
+- [`swagger.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/swagger.md) — OpenAPI / Swagger documentation maintenance.
+- [`reviewer.md`](file:///d:/coding/projects/wedding_management_backend/.ai/agents/reviewer.md) — Post-implementation diff review, rule compliance audit, 10-point self-check verification.
 
 ---
 

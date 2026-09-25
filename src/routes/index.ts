@@ -14,9 +14,8 @@ router.get('/health', (_req: Request, res: Response) => {
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
     },
-    'Wedding Management Backend service is healthy.'
+    'Wedding Management Backend service is healthy.',
   );
 });
 
 export default router;
-
