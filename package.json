@@ -10,7 +10,15 @@
     "type-check": "tsc --noEmit",
     "test": "tsx --test tests/integration/*.test.ts",
     "format:check": "prettier --check .",
-    "format:write": "prettier --write ."
+    "format:write": "prettier --write .",
+    "prisma": "prisma",
+    "prisma:generate": "prisma generate",
+    "prisma:validate": "prisma validate",
+    "prisma:format": "prisma format",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:status": "prisma migrate status",
+    "prisma:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
